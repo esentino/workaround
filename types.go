@@ -11,6 +11,7 @@ const (
 	empty_field FigureSort = iota
 	pawn
 	rook
+	bishop
 )
 const (
 	white Color = iota

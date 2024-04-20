@@ -6,11 +6,15 @@ import (
 	"github.com/rivo/tview"
 )
 
-func main() {
-	app := tview.NewApplication()
-	boardView := tview.NewTable()
+var app *tview.Application
+var boardView *tview.Table
+var chessboard ChessBoard
 
-	chessboard := ChessBoard{
+func main() {
+	app = tview.NewApplication()
+	boardView = tview.NewTable()
+
+	chessboard = ChessBoard{
 		color: white,
 	}
 
@@ -20,6 +24,7 @@ func main() {
 	grid := tview.NewGrid()
 	grid.AddItem(boardView, 0, 0, 1, 1, 10, 0, false)
 	command_input := tview.NewInputField()
+	// command_input.SetDoneFunc(make_move).Autocomplete().SetAutocompleteFunc()
 	grid.AddItem(command_input, 0, 1, 1, 1, 20, 0, true)
 	boardView.SetFixed(8, 8)
 	redraw_board(*boardView, chessboard)
@@ -45,6 +50,12 @@ func redraw_board(boardView tview.Table, chessboard ChessBoard) {
 					figure_string = " ♖ "
 				} else {
 					figure_string = " ♜ "
+				}
+			case bishop:
+				if chessboard.board[j][i].color == white {
+					figure_string = " ♗ "
+				} else {
+					figure_string = " ♝ "
 				}
 			default:
 				figure_string = "   "
@@ -89,6 +100,29 @@ func fill(chessboard ChessBoard) ChessBoard {
 	chessboard = fillPawns(chessboard, black)
 	chessboard = fillRooks(chessboard, white)
 	chessboard = fillRooks(chessboard, black)
+	chessboard = fillBishops(chessboard, white)
+	chessboard = fillBishops(chessboard, black)
+	return chessboard
+}
+
+func fillBishops(chessboard ChessBoard, color Color) ChessBoard {
+	var row int
+	switch color {
+	case white:
+		row = 0
+	default:
+		row = 7
+	}
+	chessboard.board[2][row] = Figure{
+		sort:       bishop,
+		first_move: true,
+		color:      color,
+	}
+	chessboard.board[5][row] = Figure{
+		sort:       bishop,
+		first_move: true,
+		color:      color,
+	}
 	return chessboard
 }
 
