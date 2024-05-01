@@ -8,7 +8,7 @@ type Location struct {
 }
 
 const (
-	empty_field FigureSort = iota
+	emptyField FigureSort = iota
 	pawn
 	rook
 	bishop

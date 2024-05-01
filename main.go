@@ -168,7 +168,7 @@ func fillPawns(chessboard ChessBoard, color Color) ChessBoard {
 func fillEmpty(chessboard ChessBoard) ChessBoard {
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
-			chessboard.board[i][j] = Figure{empty_field, true, empty}
+			chessboard.board[i][j] = Figure{emptyField, true, empty}
 		}
 	}
 	return chessboard
